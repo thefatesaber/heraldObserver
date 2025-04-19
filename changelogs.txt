@@ -1,0 +1,71 @@
+Herald Observer - Changelog
+============================
+
+Version 1.1.0 - Persistence, Polish, and Slash Commands
+--------------------------------------------------------
+
+SavedVariables Support (New!):
+- The addon now remembers your settings across game sessions:
+  • Dropdown selection ("self", "target", "party", "raid")
+  • Clamp to screen checkbox state
+  • Main frame position
+  • Minimap button position (angle)
+
+Slash Command:
+- Added `/herald` to toggle the UI at any time without needing to click the minimap button.
+
+UI Improvements:
+- Checkbox now uses the correct template (`UICheckButtonTemplate`) for full compatibility and consistent visuals.
+- Dragging the main frame now saves its position dynamically.
+- Dropdown choice is restored properly on load.
+
+Minimap Button Upgrade:
+- Dragging around the minimap updates and saves icon position.
+- Clicking it toggles the main Herald Observer UI.
+- Uses shared SavedVariables (`HeraldObserverDB`) for unified settings storage.
+
+Codebase Enhancements:
+- Extracted helper functions for better logic modularity (e.g., `getChatType`, `getGearValidity`)
+- Removed redundant logic blocks
+- Encapsulated position-saving logic
+- Added readable structure, forward compatibility, and cleaner startup behavior
+
+Fully backwards compatible with version 1.0.0 users
+
+
+Version 1.0.0 - Initial Release
+-------------------------------
+
+Main Features:
+- Added the core functionality to validate player gear eligibility for the "Herald of the Titans" achievement.
+
+Gear Validation:
+- Scans the equipped gear of your current target.
+- Validates each item based on:
+  • Item Level ≤ 107
+  • Expansion restriction: must be from Wrath of the Lich King or earlier
+
+Output Options:
+- Allows users to choose how the gear check results are shared:
+  • Self (local chat only)
+  • Target (whisper to the player)
+  • Party
+  • Raid
+
+Interface:
+- Created a dedicated, movable UI frame with:
+  • Title and instructions
+  • Dropdown menu for selecting output destination
+  • Clamp to screen checkbox
+  • “Observe” button to initiate scan
+
+Minimap Button:
+- Added a custom, movable minimap button for fast access to the main frame.
+- Button uses custom logo texture.
+- Clicking the icon toggles the UI window.
+
+Known Limitations:
+- No slash command yet (/herald)
+- Settings (frame position, dropdown selection) are not yet persistent
+- Checkbox uses incorrect template (`BackdropTemplate`) — may not render properly in all clients
+
