@@ -1,3 +1,4 @@
+
 -- ========================
 -- Herald Observer Addon
 -- ========================
@@ -27,9 +28,14 @@ end
 local function getGearValidity(itemLink)
     local ilvl = GetDetailedItemLevelInfo(itemLink)
     local expac = select(15, GetItemInfo(itemLink))
+    local quality = select(3, GetItemInfo(itemLink)) -- Item quality (7 = Heirloom)
+    local isHeirloom = quality == 7
+
     local ilvlOk = ilvl and ilvl <= 107
     local expacOk = not (expac and expac > 2)
-    return ilvlOk, expacOk
+    local heirloomOk = not isHeirloom
+
+    return ilvlOk, expacOk, heirloomOk
 end
 
 local function sendGearValidationMessage(playerName, itemLink, reason)
@@ -57,12 +63,13 @@ local function scanCharacterSheet()
     for slotID = 1, 19 do
         local itemLink = GetInventoryItemLink("target", slotID)
         if itemLink then
-            local ilvlOk, expacOk = getGearValidity(itemLink)
-            if not (ilvlOk and expacOk) then
+            local ilvlOk, expacOk, heirloomOk = getGearValidity(itemLink)
+            if not (ilvlOk and expacOk and heirloomOk) then
                 gearOK = false
                 local reason = "reason:"
                 if not ilvlOk then reason = reason .. " ilvl" end
                 if not expacOk then reason = reason .. " expac" end
+                if not heirloomOk then reason = reason .. " heirloom" end
                 sendGearValidationMessage(playerName, itemLink, reason)
             end
         end
