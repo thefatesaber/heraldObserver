@@ -1,6 +1,57 @@
 Herald Observer - Changelog
 ============================
 
+Version 1.3.0 - Whitelist Loader Fix & UI Expansion
+--------------------------------------------------------
+
+Whitelist Integration Fix
+Resolved a major issue preventing the gear whitelist from loading in-game.
+- Replaced unsupported require() usage with native WoW-compatible global table loading.
+- validItemWhitelist.lua now defines the item whitelist via the global variable validItemIDs.
+- The addon now reliably detects and accepts whitelisted item IDs (e.g., 28257, 28260, 28301).
+
+New UI Option: Minimap Button Toggle
+- A new checkbox was added to the UI frame to enable or disable the minimap button dynamically.
+- Checkbox state is saved via SavedVariables and respected on next login.
+- Disabling the minimap button hides it without unloading functionality.
+
+Bug Fixes & Code Improvements
+- Fixed duplicate gear scanning logic from earlier versions.
+- Cleaned up scanCharacterSheet() to streamline item rejection flow.
+- Added debug output to verify whitelist loading and item ID matches.
+
+Compatibility
+
+- Fully backwards compatible with all previous versions.
+- No SavedVariables were renamed or removed.
+
+Version 1.2.0 - Heirloom Detection & Gear Enforcement
+--------------------------------------------------------
+
+Gear Validation Enhancement
+
+The addon now detects and rejects heirloom gear when validating a player's equipment.
+- Heirloom items (quality = 7) are now flagged as ineligible.
+- The scan result will include "heirloom" as a rejection reason if detected.
+- Fully integrated into the existing getGearValidity() logic.
+
+Feedback and Messaging Updates
+
+Invalid gear reports now mention specific reasons:
+- Item level too high (ilvl)
+- Expansion too recent (expac)
+- Gear is heirloom (heirloom)
+
+Codebase Changes
+
+- Refactored getGearValidity() to return a third validation check for heirloom status.
+- Improved output clarity by including detailed rejection causes.
+
+Compatibility
+
+- Fully backwards compatible with previous versions.
+- Does not alter existing SavedVariables or UI structure.
+
 Version 1.1.0 - Persistence, Polish, and Slash Commands
 --------------------------------------------------------
 
