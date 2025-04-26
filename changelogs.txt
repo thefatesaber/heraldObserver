@@ -1,6 +1,29 @@
 Herald Observer - Changelog
 ============================
 
+Version 1.4.0 – Whitelist Refinement & Minimap Button Visual Upgrade
+--------------------------------------------------------
+Whitelist File Slimming
+- Curated validItemWhitelist.lua to include only active item IDs.
+- Removed deprecated and unused IDs to streamline maintenance.
+
+Minimap Button Visual Update
+- Standardized button size to 22×22 to match Blizzard’s micro-buttons.
+- Cropped icon
+
+Performance Enhancements
+
+- Reduced addon memory footprint by trimming the whitelist.
+- Faster load times during initialization.
+
+Codebase Changes
+- Added version header comment to validItemWhitelist.lua for clarity.
+- Enhanced debug output to report actual count of loaded entries.
+
+Compatibility
+- Fully backwards compatible with version 1.3.0.
+- No changes to SavedVariables schema.
+
 Version 1.3.0 - Whitelist Loader Fix & UI Expansion
 --------------------------------------------------------
 

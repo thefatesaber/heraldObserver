@@ -5,6 +5,7 @@
 ## Notes: A gear validation addon
 ## Dependencies: 
 ## SavedVariables: HeraldObserverDB
+## OptionalDeps: Blizzard_Minimap
 
 validItemWhitelist.lua
 heraldObserver.lua
