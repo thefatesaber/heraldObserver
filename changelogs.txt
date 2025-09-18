@@ -1,5 +1,8 @@
 Herald Observer - Changelog
 ============================
+Version 1.5.0 - Whitelist Upgrade
+--------------------------------------------------------
+Added 383 items to the Whitelist
 
 Version 1.4.0 – Whitelist Refinement & Minimap Button Visual Upgrade
 --------------------------------------------------------
