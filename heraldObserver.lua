@@ -36,8 +36,9 @@ end
 
 local function getGearValidity(itemLink)
     local ilvl = GetDetailedItemLevelInfo(itemLink)
-    local expac = select(15, GetItemInfo(itemLink))
-    local quality = select(3, GetItemInfo(itemLink)) -- 7 = Heirloom
+    local itemInfo = C_Item.GetItemInfo(itemLink)
+    local expac = itemInfo and itemInfo.expacID
+    local quality = itemInfo and itemInfo.itemQuality -- 7 = Heirloom
     local isHeirloom = quality == 7
 
     local ilvlOk = ilvl and ilvl <= 107
@@ -138,38 +139,67 @@ instructions:SetWidth(280)
 instructions:SetJustifyH("CENTER")
 instructions:SetText("To check the gear of any player, target said player and click on Observe")
 
--- Dropdown
-local dropdown = CreateFrame("Frame", "HeraldObserverDropdown", heraldObserverFrame, "UIDropDownMenuTemplate")
-dropdown:SetPoint("TOPLEFT", 20, -70)
-UIDropDownMenu_SetWidth(dropdown, 150)
-
-local label = heraldObserverFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-label:SetPoint("BOTTOMLEFT", dropdown, "TOPLEFT", 0, 5)
-label:SetText("Send herald info to:")
-
+-- Custom Dropdown (replaces removed UIDropDownMenu)
 local choices = {"self", "target", "party", "raid"}
 
-local function dropdownOnClick(self)
-    UIDropDownMenu_SetSelectedValue(dropdown, self.value)
-    heraldSelectedChoice = self.value
-    db.selectedChoice = self.value
+local label = heraldObserverFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+label:SetPoint("TOPLEFT", heraldObserverFrame, "TOPLEFT", 20, -72)
+label:SetText("Send herald info to:")
+
+local dropdownBtn = CreateFrame("Button", "HeraldObserverDropdownBtn", heraldObserverFrame, "UIPanelButtonTemplate")
+dropdownBtn:SetSize(170, 26)
+dropdownBtn:SetPoint("TOPLEFT", heraldObserverFrame, "TOPLEFT", 20, -90)
+dropdownBtn:SetText(heraldSelectedChoice .. " \226\150\190") -- ▾
+
+local dropdownList = CreateFrame("Frame", "HeraldObserverDropdownList", UIParent, "BackdropTemplate")
+dropdownList:SetSize(170, #choices * 24 + 8)
+dropdownList:SetBackdrop({
+    bgFile   = "Interface\\Buttons\\WHITE8X8",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = false, tileSize = 0, edgeSize = 12,
+    insets = { left = 3, right = 3, top = 3, bottom = 3 }
+})
+dropdownList:SetBackdropColor(0.1, 0.1, 0.1, 0.95)
+dropdownList:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+dropdownList:SetFrameStrata("FULLSCREEN_DIALOG")
+dropdownList:Hide()
+
+for i, choice in ipairs(choices) do
+    local optBtn = CreateFrame("Button", nil, dropdownList)
+    optBtn:SetSize(164, 22)
+    optBtn:SetPoint("TOPLEFT", dropdownList, "TOPLEFT", 3, -(i - 1) * 24 - 4)
+
+    local hl = optBtn:CreateTexture(nil, "HIGHLIGHT")
+    hl:SetAllPoints()
+    hl:SetColorTexture(0.3, 0.6, 1, 0.3)
+
+    local optText = optBtn:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    optText:SetPoint("LEFT", optBtn, "LEFT", 6, 0)
+    optText:SetText(choice)
+
+    optBtn:SetScript("OnClick", function()
+        heraldSelectedChoice = choice
+        db.selectedChoice = choice
+        dropdownBtn:SetText(choice .. " \226\150\190")
+        dropdownList:Hide()
+    end)
 end
 
-UIDropDownMenu_Initialize(dropdown, function()
-    for _, choice in ipairs(choices) do
-        local info = UIDropDownMenu_CreateInfo()
-        info.text = choice
-        info.value = choice
-        info.func = dropdownOnClick
-        UIDropDownMenu_AddButton(info)
+dropdownBtn:SetScript("OnClick", function()
+    if dropdownList:IsShown() then
+        dropdownList:Hide()
+    else
+        dropdownList:ClearAllPoints()
+        dropdownList:SetPoint("TOPLEFT", dropdownBtn, "BOTTOMLEFT", 0, -2)
+        dropdownList:Show()
+        dropdownList:Raise()
     end
 end)
-UIDropDownMenu_SetSelectedValue(dropdown, heraldSelectedChoice)
 
 -- Clamp to Screen Checkbox
 local clampCheckbox = CreateFrame("CheckButton", "HeraldObserverClampCheckbox", heraldObserverFrame, "UICheckButtonTemplate")
 clampCheckbox:SetSize(24, 24)
-clampCheckbox:SetPoint("TOPLEFT", dropdown, "BOTTOMLEFT", 0, -10)
+clampCheckbox:SetPoint("TOPLEFT", dropdownBtn, "BOTTOMLEFT", 0, -10)
 clampCheckbox:SetChecked(isClamped)
 clampCheckbox:SetScript("OnClick", function(self)
     isClamped = self:GetChecked()

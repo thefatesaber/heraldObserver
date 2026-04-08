@@ -47,7 +47,7 @@ if db.showMinimapButton then
             local cx, cy = GetCursorPosition()
             cx, cy = cx/scale, cy/scale
             local mx, my = map:GetCenter()
-            angle = math.deg(math.atan2(cy - my, cx - mx))
+            angle = math.deg(math.atan(cy - my, cx - mx))
             place()
         end)
     end)
