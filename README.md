@@ -90,6 +90,9 @@ All settings are stored in the `HeraldObserverDB` SavedVariable and persist acro
 
 ## Changelog
 
+### Version 1.6.1 — Midnight Item Level Squish
+- Lowered the item level cap from 107 to 41 to reflect the item level squish introduced in World of Warcraft: Midnight
+
 ### Version 1.6.0 — Midnight Compatibility
 - Updated interface version to 120001 for World of Warcraft: Midnight
 - Replaced deprecated `GetItemInfo()` with `C_Item.GetItemInfo()` (returns `.itemQuality` and `.expacID`)

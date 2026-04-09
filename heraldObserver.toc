@@ -1,7 +1,7 @@
 ## Interface: 120001
 ## Title: Herald Observer
 ## Author: Fate
-## Version: 1.5.0
+## Version: 1.6.1
 ## Notes: A gear validation addon
 ## Dependencies: 
 ## SavedVariables: HeraldObserverDB

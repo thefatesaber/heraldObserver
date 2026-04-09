@@ -41,7 +41,7 @@ local function getGearValidity(itemLink)
     local quality = itemInfo and itemInfo.itemQuality -- 7 = Heirloom
     local isHeirloom = quality == 7
 
-    local ilvlOk = ilvl and ilvl <= 107
+    local ilvlOk = ilvl and ilvl <= 41
     local expacOk = not (expac and expac > 2)
     local heirloomOk = not isHeirloom
 

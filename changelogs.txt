@@ -1,5 +1,15 @@
 Herald Observer - Changelog
 ============================
+Version 1.6.1 - Midnight Item Level Squish
+--------------------------------------------------------
+
+Gear Validation Update
+- Lowered the item level cap from 107 to 41 to reflect the item level squish
+  introduced in World of Warcraft: Midnight.
+
+Compatibility
+- No changes to UI, SavedVariables, or whitelist.
+
 Version 1.6.0 - Midnight Compatibility
 --------------------------------------------------------
 
