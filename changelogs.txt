@@ -1,5 +1,32 @@
 Herald Observer - Changelog
 ============================
+Version 1.6.0 - Midnight Compatibility
+--------------------------------------------------------
+
+Interface Update
+- Updated interface version to 120001 for World of Warcraft: Midnight compatibility.
+
+API Modernization
+- Replaced deprecated GetItemInfo() calls with C_Item.GetItemInfo(), which returns a
+  structured table. Fields accessed: itemQuality (heirloom detection) and expacID
+  (expansion check).
+- Replaced math.atan2() with math.atan() in minimapButton.lua for Lua 5.3+ compatibility.
+
+UI Overhaul: Custom Dropdown
+- Removed UIDropDownMenu / UIDropDownMenu_Initialize / UIDropDownMenu_AddButton, which
+  were removed from the game API in Midnight.
+- Replaced with a fully custom dropdown built from plain frames and buttons.
+- Visual behaviour is identical: click the button to open the list, click an option to
+  select it. Selected value and SavedVariables integration are unchanged.
+
+Bug Fix
+- Fixed the "Clamp To Screen" checkbox anchor, which was incorrectly referencing the
+  now-removed UIDropDownMenu frame.
+
+Compatibility
+- Fully backwards compatible with all SavedVariables from previous versions.
+- No changes to gear validation logic or whitelist.
+
 Version 1.5.0 - Whitelist Upgrade
 --------------------------------------------------------
 Added 383 items to the Whitelist

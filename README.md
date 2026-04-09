@@ -84,11 +84,18 @@ All settings are stored in the `HeraldObserverDB` SavedVariable and persist acro
 | Version | Interface |
 |---|---|
 | 1.5.0 | The War Within (11.2.0) |
-| 1.5.0+ | Midnight (12.0.0.1) |
+| 1.6.0 | Midnight (12.0.1) |
 
 ---
 
 ## Changelog
+
+### Version 1.6.0 — Midnight Compatibility
+- Updated interface version to 120001 for World of Warcraft: Midnight
+- Replaced deprecated `GetItemInfo()` with `C_Item.GetItemInfo()` (returns `.itemQuality` and `.expacID`)
+- Replaced removed `UIDropDownMenu` API with a fully custom frame-based dropdown
+- Replaced `math.atan2()` with `math.atan()` for Lua 5.3+ compatibility
+- Fixed "Clamp To Screen" checkbox anchor broken by the dropdown replacement
 
 ### Version 1.5.0 — Whitelist Upgrade
 - Added 383 items to the whitelist
